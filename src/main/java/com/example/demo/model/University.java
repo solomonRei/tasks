@@ -2,15 +2,18 @@ package com.example.demo.model;
 
 import org.springframework.stereotype.Component;
 
-//TODO: add Faculty class, refresh DTOs, and update the service
-// Create Faculty Service for getting facalty by name
-// Create Faculty Controller for getting faculty by name using @PathVariable
-// create method for Update faculty information by facultyName POST query, @RequestBody FacultyRequest
-// Update University Model to have a list of faculties
-// faculty has to have a name and a list of students
+import java.util.ArrayList;
+import java.util.List;
+
+//TODO: add Faculty class, refresh DTOs, and update the service +
+// Create Faculty Service for getting facalty by name +
+// Create Faculty Controller for getting faculty by name using @PathVariable +
+// create method for Update faculty information by facultyName POST query, @RequestBody FacultyRequest +
+// Update University Model to have a list of faculties +
+// faculty has to have a name and a list of students +
 // create 2 different endpoints for getting students information:
-//  The first one is for admin: It should return the whole information abput the student
-//  The second one is for students: It should return only the student's name and the faculty name
+//  The first one is for admin: It should return the whole information abput the student +
+//  The second one is for students: It should return only the student's name and the faculty name +
 // THEORY:
 // Spring beans - types of beans, how to create them, how to inject them
 // what is the @Qualifier annotation and how to use it
@@ -24,9 +27,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class University {
-    private Student student;
     private String name;
     private String location;
+    private List<Faculty> faculties;
 
     public String getName() {
         return name;
@@ -36,8 +39,16 @@ public class University {
         return location;
     }
 
-    public Student getStudent() {
-        return student;
+    public List<Faculty> getFaculties() {
+        return faculties;
+    }
+
+    public Faculty getFacultyByName(String name) {
+        for (Faculty faculty : faculties) {
+            if (faculty.getName().equals(name)) return faculty;
+        }
+
+        return null;
     }
 
     public void setName(String name) {
@@ -48,13 +59,25 @@ public class University {
         this.location = location;
     }
 
-    public void setStudent(Student student) {
-        this.student = student;
+    public void setFaculties(List<Faculty> faculties) {
+        this.faculties = new ArrayList<>(faculties);
+        for (Faculty faculty : this.faculties) {
+            faculty.setFacultyForEveryStudent();
+        }
+    }
+
+    public List<Student> findStudentsByName(String firstName, String lastName) {
+        List<Student> matchingStudents = new ArrayList<>();
+        for (Faculty faculty : faculties) {
+            matchingStudents.addAll(faculty.findStudentsByName(firstName, lastName));
+        }
+
+        return matchingStudents;
     }
 
     @Override
     public String toString() {
-       return "University [student=" + student + ", name=" + name + ", location=" + location + "]";
+       return "University [name=" + name + ", location=" + location + ", faculties=" + faculties + "]";
     }
 
 }

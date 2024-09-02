@@ -1,8 +1,11 @@
 package com.example.demo.service;
 
+import com.example.demo.model.Faculty;
 import com.example.demo.model.Student;
 import com.example.demo.model.University;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UniversityService {
@@ -17,11 +20,24 @@ public class UniversityService {
         return university;
     }
 
-    public University createUniversity(String name, String location, Student student) {
+    public Faculty getFaculty(String name) {
+        return university.getFacultyByName(name);
+    }
+
+    public List<Faculty> getFaculties() {
+        return university.getFaculties();
+    }
+
+    public University createUniversity(String name, String location, List<Faculty> faculties) {
+        university = new University(); //where is it created? Why isn't it null without this line?
         university.setName(name);
         university.setLocation(location);
-        university.setStudent(student);
+        university.setFaculties(faculties);
+
         return university;
     }
 
+    public List<Student> findStudentsByName(String firstName, String lastName) {
+        return university.findStudentsByName(firstName, lastName);
+    }
 }
