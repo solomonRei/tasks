@@ -17,8 +17,14 @@ import org.springframework.stereotype.Component;
 // what is the @Primary annotation and how to use it
 // Where can I use @Autowired annotation
 // What is the difference between @Component, @Service, @Repository, @Controller
-// How to configure the Beans in the Spring Boot application (3 ways)
-
+// How to configure the Beans in the Spring Boot application (2 ways)
+// Part 2:
+// Read about docker, install Docker Desktop
+// Run Postgres in Docker using docker-compose
+// Read About JDBC, DriverManager, JPA
+// One example with DriverManager
+// One example with JDBC
+// One example with JPA
 
 
 

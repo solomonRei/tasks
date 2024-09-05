@@ -25,13 +25,8 @@ public class UniversityController {
 
     @GetMapping("/")
     public ResponseEntity<UniversityDTO> getUniversity() {
-        University uni = universityService.getUniversity();
-
-        UniversityDTO university = new UniversityDTO();
-        university.setName(uni.getName());
-        university.setLocation(uni.getLocation());
-
-        return ResponseEntity.ok(university);
+        UniversityDTO universityDTO = universityService.getUniversity("MIT");
+        return ResponseEntity.ok(universityDTO);
     }
 
     @PostMapping("/create")
