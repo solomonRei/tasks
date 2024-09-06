@@ -2,7 +2,6 @@ package com.example.demo.api.controllers;
 
 import com.example.demo.api.response.StudentAdminDTO;
 import com.example.demo.api.response.StudentUsualDTO;
-import com.example.demo.model.Student;
 import com.example.demo.model.University;
 import com.example.demo.model.Faculty;
 import com.example.demo.api.requests.UniversityRequest;
@@ -15,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.demo.mappers.FacultyMapper.toFacultyDTO;
@@ -54,9 +52,6 @@ public class UniversityController {
         university.setName(uni.getName());
         university.setLocation(uni.getLocation());
         university.setFaculties(uni.getFaculties());
-
-        System.out.println("uni faculties = " + uni.getFaculties().get(0).getName());
-        System.out.println("faculties = " + university.getFaculties().get(0).getName());
 
         return ResponseEntity.ok(university);
     }
