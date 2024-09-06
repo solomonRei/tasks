@@ -30,6 +30,14 @@ import java.util.List;
 // The @Autowired annotation in Spring is used for dependency injection. It allows Spring to automatically inject beans into a class.
 // .
 // Site Baeldung
+// How to configure the Beans in the Spring Boot application (2 ways)
+// Part 2:
+// Read about docker, install Docker Desktop
+// Run Postgres in Docker using docker-compose
+// Read About JDBC, DriverManager, JPA
+// One example with DriverManager
+// One example with JDBC
+// One example with JPA
 
 
 

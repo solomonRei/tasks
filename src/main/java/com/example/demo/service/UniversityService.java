@@ -1,8 +1,11 @@
 package com.example.demo.service;
 
 import com.example.demo.model.Faculty;
+import com.example.demo.api.response.UniversityDTO;
+import com.example.demo.entity.UniversityEntity;
 import com.example.demo.model.Student;
 import com.example.demo.model.University;
+import com.example.demo.repository.UniversityRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,14 +15,19 @@ public class UniversityService {
 
     private final University university;
 
-    public UniversityService(University university) {
-        this.university = university;
+    public UniversityService(UniversityRepository universityRepository) {
+        this.universityRepository = universityRepository;
     }
 
-    public University getUniversity() {
-        return university;
-    }
+    public UniversityDTO getUniversity(String name) {
+        UniversityEntity entity = universityRepository.findByName(name);
+        UniversityDTO universityDTO = new UniversityDTO();
+        universityDTO.setName(entity.getName());
+        universityDTO.setLocation(entity.getLocation());
 
+        return universityDTO;
+    }
+  
     public Faculty getFaculty(String name) {
         return university.getFacultyByName(name);
     }
