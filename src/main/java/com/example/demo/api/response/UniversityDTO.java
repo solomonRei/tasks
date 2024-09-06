@@ -3,8 +3,9 @@ package com.example.demo.api.response;
 import com.example.demo.model.Faculty;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.demo.mappers.FacultyMapper.toFacultyDTO;
 
 public class UniversityDTO {
     @JsonProperty("university_name")
@@ -35,8 +36,6 @@ public class UniversityDTO {
     }
 
     public void setFaculties(List<Faculty> faculties) {
-        this.faculties = faculties.stream()
-                .map(FacultyDTO::new)
-                .toList();
+        this.faculties = toFacultyDTO(faculties);
     }
 }

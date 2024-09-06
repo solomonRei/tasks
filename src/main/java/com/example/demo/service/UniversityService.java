@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public class UniversityService {
 
-    private University university;
+    private final University university;
 
     public UniversityService(University university) {
         this.university = university;
@@ -29,7 +29,6 @@ public class UniversityService {
     }
 
     public University createUniversity(String name, String location, List<Faculty> faculties) {
-        university = new University(); //where is it created? Why isn't it null without this line?
         university.setName(name);
         university.setLocation(location);
         university.setFaculties(faculties);

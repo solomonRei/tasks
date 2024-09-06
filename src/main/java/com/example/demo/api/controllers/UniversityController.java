@@ -16,19 +16,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import static com.example.demo.mappers.FacultyMapper.toFacultyDTO;
+import static com.example.demo.mappers.StudentMapper.toStudentAdminDTO;
+import static com.example.demo.mappers.StudentMapper.toStudentUsualDTO;
 
 @RestController
 @RequestMapping("/university")
 public class UniversityController {
 
     private UniversityService universityService;
+    private FacultyService facultyService;
 
     @Autowired
-    public UniversityController(UniversityService universityService) {
+    public UniversityController(UniversityService universityService, FacultyService facultyService) {
         this.universityService = universityService;
+        this.facultyService = facultyService;
     }
 
     @PostMapping("/create")
@@ -51,41 +55,38 @@ public class UniversityController {
         university.setLocation(uni.getLocation());
         university.setFaculties(uni.getFaculties());
 
+        System.out.println("uni faculties = " + uni.getFaculties().get(0).getName());
+        System.out.println("faculties = " + university.getFaculties().get(0).getName());
+
         return ResponseEntity.ok(university);
     }
 
     @GetMapping("/getFaculty/{name}")
     public ResponseEntity<FacultyDTO> getFaculty(@PathVariable String name) {
-        Faculty fac = universityService.getFaculty(name);
-        FacultyDTO faculty = new FacultyDTO(fac);
+        FacultyDTO facultyDTO = toFacultyDTO(universityService.getFaculty(name));
 
-        return ResponseEntity.ok(faculty);
+        return ResponseEntity.ok(facultyDTO);
     }
 
     @PostMapping("/updateFaculty/{name}")
     public void updateFaculty(@PathVariable String name, @RequestBody FacultyRequest request) {
-        FacultyService facSer = new FacultyService(universityService.getFaculty(name));
-        facSer.setFaculty(request);
+        Faculty faculty = universityService.getFaculty(name);
+        if (faculty != null) facultyService.updateFaculty(faculty, request.getName(), request.getStudents());
+        else throw new RuntimeException("faculty is null");
 
-        System.out.println(facSer);
+        System.out.println(universityService.getFaculty(name));
     }
 
     @GetMapping("/getStudent/{firstName}/{lastName}")
     public ResponseEntity<List<StudentUsualDTO>> getStudent(@PathVariable String firstName, @PathVariable String lastName) {
-        List<StudentUsualDTO> matchingStudents = new ArrayList<>();
-        for (Student student : universityService.findStudentsByName(firstName, lastName)) {
-            matchingStudents.add(new StudentUsualDTO(student));
-        }
+        List<StudentUsualDTO> matchingStudents = toStudentUsualDTO(universityService.findStudentsByName(firstName, lastName));
 
         return ResponseEntity.ok(matchingStudents);
     }
 
     @GetMapping("/admin/getStudent/{firstName}/{lastName}")
     public ResponseEntity<List<StudentAdminDTO>> getStudentForAdmin(@PathVariable String firstName, @PathVariable String lastName) {
-        List<StudentAdminDTO> matchingStudents = new ArrayList<>();
-        for (Student student : universityService.findStudentsByName(firstName, lastName)) {
-            matchingStudents.add(new StudentAdminDTO(student));
-        }
+        List<StudentAdminDTO> matchingStudents = toStudentAdminDTO(universityService.findStudentsByName(firstName, lastName));
 
         return ResponseEntity.ok(matchingStudents);
     }

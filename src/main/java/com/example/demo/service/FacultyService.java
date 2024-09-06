@@ -1,6 +1,5 @@
 package com.example.demo.service;
 
-import com.example.demo.api.requests.FacultyRequest;
 import com.example.demo.model.Student;
 import com.example.demo.model.Faculty;
 import org.springframework.stereotype.Service;
@@ -15,6 +14,12 @@ public class FacultyService {
         this.faculty = faculty;
     }
 
+    public void updateFaculty(Faculty faculty, String name, List<Student> students) {
+        faculty.setName(name);
+        faculty.setStudents(students);
+        faculty.setFacultyForEveryStudent();
+    }
+
     public Faculty getFaculty() {
         return faculty;
     }
@@ -22,12 +27,6 @@ public class FacultyService {
     public Faculty setFaculty(String name, List<Student> students) {
         faculty.setName(name);
         faculty.setStudents(students);
-
-        return faculty;
-    }
-
-    public Faculty setFaculty(FacultyRequest facultyRequest) {
-        setFaculty(facultyRequest.getName(), facultyRequest.getStudents());
 
         return faculty;
     }

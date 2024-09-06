@@ -1,6 +1,5 @@
 package com.example.demo.api.response;
 
-import com.example.demo.model.Faculty;
 import com.example.demo.model.Student;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -26,31 +25,19 @@ public class StudentUsualDTO {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
     public String getLastName() {
         return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public String getAbbr() {
         return abbr;
     }
 
-    public void setAbbr(String abbr) {
-        this.abbr = abbr;
-    }
-
     public String getFaculty() {
         return faculty;
     }
 
-    public void setFaculty(FacultyDTO faculty) {
-        this.faculty = faculty.getName();
+    public void setFaculty(String faculty) {
+        this.faculty = faculty;
     }
 }

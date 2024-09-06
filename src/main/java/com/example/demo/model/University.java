@@ -21,7 +21,15 @@ import java.util.List;
 // Where can I use @Autowired annotation
 // What is the difference between @Component, @Service, @Repository, @Controller
 // How to configure the Beans in the Spring Boot application (3 ways)
-
+// -----
+// Spring beans - an instance of a class managed by the Spring container
+// The @Qualifier annotation in Spring is used to resolve ambiguity when multiple beans of the same type exist.
+//      If there are several beans of the same type, @Qualifier specifies which one to inject.
+// The @Primary annotation is used to mark a bean as the default bean to be injected when there are multiple beans of the same type.
+//      If no @Qualifier is used, Spring will inject the bean marked with @Primary.
+// The @Autowired annotation in Spring is used for dependency injection. It allows Spring to automatically inject beans into a class.
+// .
+// Site Baeldung
 
 
 

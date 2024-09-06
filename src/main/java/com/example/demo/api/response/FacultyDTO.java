@@ -1,23 +1,17 @@
 package com.example.demo.api.response;
 
-import com.example.demo.model.Faculty;
 import com.example.demo.model.Student;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
-import java.util.stream.Collectors;
+
+import static com.example.demo.mappers.StudentMapper.toStudentUsualDTO;
 
 public class FacultyDTO {
     @JsonProperty("faculty_name")
     private String name;
     @JsonProperty("faculty_students")
     private List<StudentUsualDTO> students;
-
-    public FacultyDTO(Faculty faculty) {
-        this.name = faculty.getName();
-        setStudents(faculty.getStudents());
-        setFacultyForEveryStudent();
-    }
 
     public String getName() {
         return name;
@@ -32,14 +26,6 @@ public class FacultyDTO {
     }
 
     public void setStudents(List<Student> students) {
-        this.students = students.stream()
-                .map(StudentUsualDTO::new)
-                .collect(Collectors.toList());
-    }
-
-    public void setFacultyForEveryStudent() {
-        for (StudentUsualDTO student : students) {
-            student.setFaculty(this);
-        }
+        this.students = toStudentUsualDTO(students);
     }
 }

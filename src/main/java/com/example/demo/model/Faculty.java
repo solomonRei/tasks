@@ -42,6 +42,7 @@ public class Faculty {
         return matchingStudents;
     }
 
+    @Override
     public String toString() {
         return "Faculty [name=" + name + ", students=" + students + "]";
     }
