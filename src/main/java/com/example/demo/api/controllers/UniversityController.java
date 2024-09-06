@@ -44,14 +44,9 @@ public class UniversityController {
         System.out.println(university);
     }
 
-    @GetMapping("/")
-    public ResponseEntity<UniversityDTO> getUniversity() {
-        University uni = universityService.getUniversity();
-
-        UniversityDTO university = new UniversityDTO();
-        university.setName(uni.getName());
-        university.setLocation(uni.getLocation());
-        university.setFaculties(uni.getFaculties());
+    @GetMapping("/{name}")
+    public ResponseEntity<UniversityDTO> getUniversity(@PathVariable String name) {
+        UniversityDTO university = universityService.getUniversity(name);
 
         return ResponseEntity.ok(university);
     }

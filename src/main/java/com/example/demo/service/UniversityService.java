@@ -13,7 +13,8 @@ import java.util.List;
 @Service
 public class UniversityService {
 
-    private final University university;
+    private University university;
+    private final UniversityRepository universityRepository;
 
     public UniversityService(UniversityRepository universityRepository) {
         this.universityRepository = universityRepository;
