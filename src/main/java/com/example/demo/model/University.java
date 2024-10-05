@@ -15,22 +15,14 @@ import java.util.List;
 //  The first one is for admin: It should return the whole information abput the student +
 //  The second one is for students: It should return only the student's name and the faculty name +
 // THEORY:
-// Spring beans - types of beans, how to create them, how to inject them
-// what is the @Qualifier annotation and how to use it
-// what is the @Primary annotation and how to use it
-// Where can I use @Autowired annotation
-// What is the difference between @Component, @Service, @Repository, @Controller
-// How to configure the Beans in the Spring Boot application (3 ways)
+// Spring beans - types of beans, how to create them, how to inject them +
+// what is the @Qualifier annotation and how to use it +
+// what is the @Primary annotation and how to use it +
+// Where can I use @Autowired annotation + (but how it works with properties)
+// What is the difference between @Component, @Service, @Repository, @Controller +
+// How to configure the Beans in the Spring Boot application (3 ways) +
 // -----
-// Spring beans - an instance of a class managed by the Spring container
-// The @Qualifier annotation in Spring is used to resolve ambiguity when multiple beans of the same type exist.
-//      If there are several beans of the same type, @Qualifier specifies which one to inject.
-// The @Primary annotation is used to mark a bean as the default bean to be injected when there are multiple beans of the same type.
-//      If no @Qualifier is used, Spring will inject the bean marked with @Primary.
-// The @Autowired annotation in Spring is used for dependency injection. It allows Spring to automatically inject beans into a class.
-// .
 // Site Baeldung
-// How to configure the Beans in the Spring Boot application (2 ways)
 // Part 2:
 // Read about docker, install Docker Desktop
 // Run Postgres in Docker using docker-compose
@@ -38,6 +30,16 @@ import java.util.List;
 // One example with DriverManager
 // One example with JDBC
 // One example with JPA
+// Part 3:
+// Difference between RestController and Controller
+// One example with JDBC
+// One example with JPA
+// https://www.baeldung.com/spring-component-repository-service#:~:text=%40Component%20is%20a%20generic%20stereotype,act%20as%20a%20database%20repository
+// https://www.baeldung.com/entity-to-and-from-dto-for-a-java-spring-application
+// HTTP protocol
+// Protocols: Rest, Soup(old)
+// Web sockets
+// Exceptions in java
 
 
 

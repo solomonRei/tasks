@@ -1,84 +1,88 @@
 package com.example.demo.api.controllers;
 
-import com.example.demo.api.response.StudentAdminDTO;
 import com.example.demo.api.response.StudentUsualDTO;
+import com.example.demo.entity.UniversityEntity;
 import com.example.demo.model.University;
-import com.example.demo.model.Faculty;
 import com.example.demo.api.requests.UniversityRequest;
-import com.example.demo.api.requests.FacultyRequest;
 import com.example.demo.api.response.UniversityDTO;
 import com.example.demo.api.response.FacultyDTO;
 import com.example.demo.service.UniversityService;
-import com.example.demo.service.FacultyService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.example.demo.mappers.FacultyMapper.toFacultyDTO;
-import static com.example.demo.mappers.StudentMapper.toStudentAdminDTO;
-import static com.example.demo.mappers.StudentMapper.toStudentUsualDTO;
 
 @RestController
 @RequestMapping("/university")
 public class UniversityController {
-
-    private UniversityService universityService;
-    private FacultyService facultyService;
+    private final UniversityService universityService;
 
     @Autowired
-    public UniversityController(UniversityService universityService, FacultyService facultyService) {
+    public UniversityController(UniversityService universityService) {
         this.universityService = universityService;
-        this.facultyService = facultyService;
     }
 
     @PostMapping("/create")
-    public void createUniversity(@RequestBody UniversityRequest request) {
+    public void createUniversity(@RequestBody UniversityRequest universityRequest) {
+        UniversityEntity universityEntity = universityService.getUniversityEntity(universityRequest.getName());
+        if (universityEntity != null) {
+            throw new RuntimeException("University with this name already exists");
+        }
+
         University university = universityService.createUniversity(
-                request.getName(),
-                request.getLocation(),
-                request.getFaculties()
+                universityRequest.getName(),
+                universityRequest.getLocation(),
+                universityRequest.getFaculties()
         );
 
-        System.out.println(university);
+        System.out.println("Created university: " + university);
     }
 
-    @GetMapping("/{name}")
-    public ResponseEntity<UniversityDTO> getUniversity(@PathVariable String name) {
-        UniversityDTO university = universityService.getUniversity(name);
+    @PostMapping("/update/{universityName}")
+    public void updateUniversity(@PathVariable String universityName, @RequestBody UniversityRequest universityRequest) {
+        UniversityEntity universityEntity = universityService.getUniversityEntity(universityName);
+        if (universityEntity != null) {
+            universityService.updateUniversity(
+                    universityEntity,
+                    universityRequest.getName(),
+                    universityRequest.getLocation(),
+                    universityRequest.getFaculties()
+            );
+        }
+        else {
+            throw new RuntimeException("University " + universityRequest + " doesn't exist");
+        }
+
+        System.out.println("Updated university: " + universityEntity);
+    }
+
+    @GetMapping("/{universityName}")
+    public ResponseEntity<UniversityDTO> getUniversity(@PathVariable String universityName) {
+        UniversityDTO university = universityService.getUniversity(universityName);
 
         return ResponseEntity.ok(university);
     }
 
-    @GetMapping("/getFaculty/{name}")
-    public ResponseEntity<FacultyDTO> getFaculty(@PathVariable String name) {
-        FacultyDTO facultyDTO = toFacultyDTO(universityService.getFaculty(name));
+    @GetMapping("/getFaculties/{universityName}")
+    public ResponseEntity<List<FacultyDTO>> getFaculties(@PathVariable String universityName) {
+        List<FacultyDTO> facultyDTOList = universityService.getUniversityFaculties(universityName);
 
-        return ResponseEntity.ok(facultyDTO);
+        return ResponseEntity.ok(facultyDTOList);
     }
 
-    @PostMapping("/updateFaculty/{name}")
-    public void updateFaculty(@PathVariable String name, @RequestBody FacultyRequest request) {
-        Faculty faculty = universityService.getFaculty(name);
-        if (faculty != null) facultyService.updateFaculty(faculty, request.getName(), request.getStudents());
-        else throw new RuntimeException("faculty is null");
+    @GetMapping("/getStudents/{universityName}")
+    public ResponseEntity<List<StudentUsualDTO>> getStudents(@PathVariable String universityName) {
+        List<StudentUsualDTO> studentUsualDTOList = universityService.getUniversityStudents(universityName);
 
-        System.out.println(universityService.getFaculty(name));
+        return ResponseEntity.ok(studentUsualDTOList);
     }
 
-    @GetMapping("/getStudent/{firstName}/{lastName}")
-    public ResponseEntity<List<StudentUsualDTO>> getStudent(@PathVariable String firstName, @PathVariable String lastName) {
-        List<StudentUsualDTO> matchingStudents = toStudentUsualDTO(universityService.findStudentsByName(firstName, lastName));
-
-        return ResponseEntity.ok(matchingStudents);
-    }
-
-    @GetMapping("/admin/getStudent/{firstName}/{lastName}")
-    public ResponseEntity<List<StudentAdminDTO>> getStudentForAdmin(@PathVariable String firstName, @PathVariable String lastName) {
-        List<StudentAdminDTO> matchingStudents = toStudentAdminDTO(universityService.findStudentsByName(firstName, lastName));
-
-        return ResponseEntity.ok(matchingStudents);
+    @DeleteMapping("/delete/{universityName}")
+    public void deleteUniversity(@PathVariable String universityName) {
+        universityService.deleteUniversity(universityName);
+        System.out.println("Deleted university: " + universityName);
     }
 
     // DTO - Data Transfer Object

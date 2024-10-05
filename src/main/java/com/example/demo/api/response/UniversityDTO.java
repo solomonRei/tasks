@@ -35,7 +35,7 @@ public class UniversityDTO {
         return faculties;
     }
 
-    public void setFaculties(List<Faculty> faculties) {
-        this.faculties = toFacultyDTO(faculties);
+    public void setFaculties(List<FacultyDTO> faculties) {
+        this.faculties = faculties;
     }
 }

@@ -54,6 +54,26 @@ public class Student implements People {
         return faculty;
     }
 
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public void setSignContractDate(Date signContractDate) {
+        this.signContractDate = signContractDate;
+    }
+
+    public void setOnBudget(boolean onBudget) {
+        this.onBudget = onBudget;
+    }
+
     public void setFaculty(Faculty faculty) {
         this.faculty = faculty.getName();
     }
