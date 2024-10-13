@@ -1,26 +1,28 @@
 package com.example.demo.api.requests;
 
-import com.example.demo.model.Student;
+import com.example.demo.model.Faculty;
+
+import java.util.List;
 
 public class UniversityRequest {
     private String name;
     private String location;
-    private Student student;
+    private List<Faculty> faculties;
 
     public void setLocation(String location) {
         this.location = location;
     }
 
-    public void setStudent(Student student) {
-        this.student = student;
+    public void setFaculties(List<Faculty> faculties) {
+        this.faculties = faculties;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public Student getStudent() {
-        return student;
+    public List<Faculty> getFaculties() {
+        return faculties;
     }
 
     public String getLocation() {
